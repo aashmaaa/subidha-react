@@ -28,7 +28,7 @@ function ServiceGrid() {
   console.log(service);
 
   const handleCardClick = (serviceName) => {
-    navigate(`/order`);
+    navigate(`/service-details/${serviceName}`);
   };
 
   if (isLoading) return <Spinner />;

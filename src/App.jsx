@@ -16,6 +16,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import Order from "./pages/Order";
+import OrderDetails from "./features/order/OrderDetails";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,8 +37,6 @@ function App() {
           <Route
             element={
               <ProtectedRoute>
-                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-
                 <AppLayout />
               </ProtectedRoute>
             }
@@ -44,7 +44,9 @@ function App() {
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="bookings" element={<Bookings />} />
-            <Route path="service-details/:name" element={<ServiceDetails />} />
+            <Route path="order" element={<Order />} />
+            <Route path="orderDetails" element={<OrderDetails />} />
+            {/* <Route path="service-details/:name" element={<ServiceDetails />} /> ------ in org */}
 
             {/* <Route path="cabins" element={<Cabins />} />
             <Route path="users" element={<Users />} />
