@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-const ServiceDetails = () => {
+const ServiceDetails = ({ serv }) => {
   const { name } = useParams();
 
   return (

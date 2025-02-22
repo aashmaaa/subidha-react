@@ -5,6 +5,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { loginApi } from "../../services/apiAuth";
 import { useLogin } from "./useLogin";
+import SpinnerMini from "../../ui/SpinnerMini";
 // import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
@@ -51,7 +52,7 @@ function LoginForm() {
       </FormRow>
       <FormRow orientation="vertical">
         <Button size="large" disabled={isLoading}>
-          {!isLoading ? "Log in" : "<SpinnerMini />"}
+          {!isLoading ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRow>
     </Form>

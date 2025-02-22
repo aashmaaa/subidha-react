@@ -18,6 +18,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import Order from "./pages/Order";
 import OrderDetails from "./features/order/OrderDetails";
+import ServiceCard from "./features/services/ServiceCard";
+import Modal from "./ui/Modal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +48,7 @@ function App() {
             <Route path="bookings" element={<Bookings />} />
             <Route path="order" element={<Order />} />
             <Route path="orderDetails" element={<OrderDetails />} />
+
             {/* <Route path="service-details/:name" element={<ServiceDetails />} /> ------ in org */}
 
             {/* <Route path="cabins" element={<Cabins />} />
