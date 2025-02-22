@@ -71,13 +71,13 @@ function MainNav() {
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/cabins">
+          <StyledNavLink to="/order-history">
             <HiOutlineArrowPath />
             <span>Order History</span>
           </StyledNavLink>
         </li>
         <li>
-          <StyledNavLink to="/users">
+          <StyledNavLink to="/profile">
             <HiOutlineUsers />
             <span>My Profile</span>
           </StyledNavLink>

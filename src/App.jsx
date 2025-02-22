@@ -5,21 +5,22 @@ import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import ServiceGrid from "./features/services/ServiceGrid";
 import ServiceDetails from "./features/services/ServiceDetails";
-// import Cabins from "./pages/Cabins";
 // import Users from "./pages/Users";
 // import Settings from "./pages/Settings";
 // import Account from "./pages/Account";
 import Login from "./pages/Login";
-// import PageNotFound from "./pages/PageNotFound";
+import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-// import { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import Order from "./pages/Order";
 import OrderDetails from "./features/order/OrderDetails";
 import ServiceCard from "./features/services/ServiceCard";
 import Modal from "./ui/Modal";
+import OrderHistory from "./features/order/OrderHistory";
+import Profile from "./features/authentication/Profile";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,17 +52,19 @@ function App() {
 
             {/* <Route path="service-details/:name" element={<ServiceDetails />} /> ------ in org */}
 
-            {/* <Route path="cabins" element={<Cabins />} />
-            <Route path="users" element={<Users />} />
+            <Route path="order-history" element={<OrderHistory />} />
+            <Route path="profile" element={<Profile />} />
+            {/* <Route path="profile" element={<Profile />} /> */}
+            {/* <Route path="users" element={<Users />} />
             <Route path="settings" element={<Settings />} />
             <Route path="account" element={<Account />} /> */}
           </Route>
           <Route path="login" element={<Login />} />
-          {/* <Route path="*" element={<PageNotFound />} /> */}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
 
-      {/* <Toaster
+      <Toaster
         position="top-center"
         gutter={12}
         containerStyle={{ margin: "8px" }}
@@ -80,7 +83,7 @@ function App() {
             color: "var(--color-grey-700)",
           },
         }}
-      /> */}
+      />
     </QueryClientProvider>
   );
 }

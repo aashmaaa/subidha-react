@@ -6,6 +6,7 @@ import Menus from "../../ui/Menus";
 import ServiceDetails from "./ServiceDetails";
 import PlaceOrder from "../order/PlaceOrder";
 import { useState } from "react";
+import OrderForm from "../order/OrderForm";
 
 const StyledServiceCard = styled.div`
   width: 250px;
@@ -17,11 +18,16 @@ const StyledServiceCard = styled.div`
   font-size: 16px;
   font-weight: 400;
   margin: 10px;
-  background: var(--color-grey-400);
   cursor: pointer;
+  background: #f9f9f9;
+
+  &:hover {
+    background: #e6e6e6;
 `;
 
 function ServiceCard({ service }) {
+  // console.log(service);
+
   const { _id: serviceId, name, servicecode } = service;
   const [serviceProvided, setServiceProvided] = useState(null);
 
@@ -49,13 +55,13 @@ function ServiceCard({ service }) {
         <h3>{name}</h3>
         <p>Code: {servicecode}</p>
 
-        {/* Ensure Modal.Window is conditionally rendered */}
         <Modal.Window name="view-details">
-          <ServiceDetails serviceName={name} />
+          <ServiceDetails service={service} />
+          {/* service={service} onCloseModal={(close) => close()}  */}
         </Modal.Window>
 
         <Modal.Window name="place-order">
-          <PlaceOrder serviceName={name} />
+          <OrderForm service={service} onCloseModal={(close) => close()} />
         </Modal.Window>
       </Modal>
     </StyledServiceCard>
