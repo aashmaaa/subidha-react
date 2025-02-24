@@ -4,12 +4,14 @@ import { getUserOrders } from "../../services/apiUserOrder";
 export function useUserOrders() {
   const {
     isLoading,
-    data: orderHistory,
+    data: orders,
     error,
   } = useQuery({
     queryKey: ["userOrders"],
     queryFn: getUserOrders,
   });
 
-  return { isLoading, orderHistory, error };
+  console.log(orders);
+
+  return { isLoading, orders, error };
 }

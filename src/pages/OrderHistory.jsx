@@ -1,6 +1,6 @@
 import React from "react";
 import { useUserOrders } from "../features/orderHistory/useUserOrders";
-import OrdersTable from "./OrderRow";
+import OrdersRow from "./OrderRow";
 
 export default function OrdersPage() {
   const { data: orders, isLoading, error } = useUserOrders();
@@ -13,7 +13,7 @@ export default function OrdersPage() {
       <h2>Your Orders</h2>
       <ul>
         orderssss
-        <OrdersTable />
+        <OrdersRow />
         {/* {orders.map((order) => (
           <li key={order._id}>{order.serviceName}</li>
         ))} */}

@@ -16,7 +16,7 @@ export async function getUserOrders() {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data.docs);
+    console.log(response.data.data.docs);
     return response.data.data.docs;
   } catch (error) {
     console.error(
