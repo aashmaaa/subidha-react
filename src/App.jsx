@@ -19,7 +19,7 @@ import Order from "./pages/Order";
 import OrderDetails from "./features/order/OrderDetails";
 import ServiceCard from "./features/services/ServiceCard";
 import Modal from "./ui/Modal";
-import OrderHistory from "./features/order/OrderHistory";
+import OrderHistory from "./pages/OrderHistory";
 import Profile from "./features/authentication/Profile";
 
 const queryClient = new QueryClient({
