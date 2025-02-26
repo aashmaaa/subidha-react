@@ -2,10 +2,15 @@ import React from "react";
 import { useUserOrders } from "./useUserOrders"; // Adjust path as needed
 import Table from "../../ui/Table"; // Your existing table component
 import Spinner from "../../ui/Spinner";
+import OrderDetails from "../order/OrderDetails";
 
 const OrdersTable = () => {
   const { orders, isLoading, error } = useUserOrders();
   // console.log(orders);
+
+  function handleClick(e) {
+    <OrderDetails order={orders} />;
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -33,7 +38,7 @@ const OrdersTable = () => {
         data={orders}
         render={(order) => (
           <Table.Row key={order._id}>
-            <div>{order.servicenames?.name}</div>
+            <div onClick={handleClick}>{order.servicenames?.name}</div>
             <div>{order.status}</div>
             <div>{order.org?.nameOrg ?? "N/A"}</div>
             <div>{order.service?.serviceprovidername ?? "N/A"}</div>
