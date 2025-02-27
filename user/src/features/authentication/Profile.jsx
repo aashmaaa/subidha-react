@@ -1,4 +1,4 @@
-import UpdateUserDataForm from "./UpdateUserDataForm";
+// import UpdateUserDataForm from "./UpdateUserDataForm";
 
 function Profile() {
   return <div>{/* <UpdateUserDataForm /> */}</div>;
