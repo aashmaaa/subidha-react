@@ -26,3 +26,15 @@ export async function getUserOrders() {
     throw new Error("Orders could not be loaded");
   }
 }
+
+export async function createNewOrder(newOrder) {
+  try {
+    const response = await axios.post(`${API_URL}/order`, newOrder);
+    return response.data;
+  } catch (error) {
+    console.error(error.response?.data || error);
+    throw new Error(
+      error.response?.data?.error || "Order could not be created"
+    );
+  }
+}
