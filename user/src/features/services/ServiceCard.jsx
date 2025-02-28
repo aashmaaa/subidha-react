@@ -8,6 +8,7 @@ import ServiceDetails from "./ServiceDetails";
 import PlaceOrder from "../order/PlaceOrder";
 import { useState } from "react";
 import OrderForm from "../order/OrderForm";
+import BookingForm from "../bookings/BookingForm";
 
 const StyledServiceCard = styled.div`
   width: 250px;
@@ -53,6 +54,12 @@ function ServiceCard({ service }) {
                 Place Order
               </Menus.Button>
             </Modal.Open>
+
+            <Modal.Open opens="book-service">
+              <Menus.Button icon={<HiArrowRightCircle />}>
+                Create Booking
+              </Menus.Button>
+            </Modal.Open>
           </Menus.List>
         </Menus.Menu>
 
@@ -66,6 +73,10 @@ function ServiceCard({ service }) {
 
         <Modal.Window name="place-order">
           <OrderForm service={service} onCloseModal={(close) => close()} />
+        </Modal.Window>
+
+        <Modal.Window name="book-service">
+          <BookingForm service={service} onCloseModal={(close) => close()} />
         </Modal.Window>
       </Modal>
     </StyledServiceCard>
