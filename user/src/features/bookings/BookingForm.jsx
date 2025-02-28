@@ -80,6 +80,12 @@ import { HiCalendarDays } from "react-icons/hi2";
 
 import Spinner from "../../ui/Spinner";
 import Button from "../../ui/Button";
+import Form from "../../ui/Form";
+import { useCreateBooking } from "./useCreateBooking";
+import FormRow from "../../ui/FormRow";
+import { useUser } from "../authentication/useUser";
+import { useEffect } from "react";
+import { formatISO } from "date-fns";
 
 const ModalContent = styled.div`
   display: flex;
@@ -119,18 +125,52 @@ function OrderForm({ service, onCloseModal }) {
   const { isLoading, booking } = useBooking();
   const { location, error } = useGeolocation();
   const isFetchingLoading = !location && !error;
+  const { user } = useUser();
+  const [currentTime, setCurrentTime] = useState("");
 
-  const { register, handleSubmit, control } = useForm({
-    defaultValues: {
-      location: location || "",
-      date: null,
-    },
-  });
+  useEffect(() => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    setCurrentTime(`${hours}:${minutes}`);
+  }, []);
 
-  const onSubmit = (data) => {
-    console.log("Booking Data:", data);
-    onCloseModal();
-  };
+  const { register, handleSubmit, reset, getValues, formState, control } =
+    useForm({
+      defaultValues: {
+        location: location || "",
+        date: null,
+      },
+    });
+  const { errors } = formState;
+
+  const { newBooking, isCreating } = useCreateBooking();
+
+  function onSubmit(data) {
+    const formattedDate = formatISO(new Date(data.bookingDate));
+    const createBooking = {
+      // user: user._id,
+      service: service._id,
+      bookingdate: formattedDate,
+      bookingtime: null,
+      location: data.location,
+      totalprice: 250,
+    };
+
+    newBooking(createBooking, {
+      onSuccess: (data) => {
+        reset();
+        onCloseModal?.();
+      },
+    });
+
+    console.log("New Booking Data:", createBooking);
+  }
+
+  function onError(errors) {
+    //---------------------
+    console.log(errors);
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -139,45 +179,70 @@ function OrderForm({ service, onCloseModal }) {
       <h2>Book this service?</h2>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onError)}>
         {/* Location Input */}
-        <label>Service Name</label>
-        <Input
-          type="text"
-          placeholder="Choose a service name"
-          {...register("location")}
-        />
-        <label>Enter your location</label>
-        <Input
-          type="text"
-          placeholder={
-            isFetchingLoading ? "Fetching location..." : "Enter your location"
-          }
-          {...register("location")}
-        />
-
-        {/* Date Picker Input */}
-        <label>Select a Date:</label>
-        <InputWrapper>
-          <Controller
-            name="date"
-            control={control}
-            render={({ field }) => (
-              <DatePicker
-                selected={field.value}
-                onChange={(date) => field.onChange(date)}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="Enter a date"
-                // customInput={<Input />}
-              />
-            )}
+        {/* <FormRow label="Service Name" error={errors?.name?.message}>
+          <Input
+            type="text"
+            id="serviceName"
+            disabled={isCreating}
+            placeholder="Choose a service name"
+            {...register("serviceName")}
           />
-        </InputWrapper>
+        </FormRow> */}
+
+        <FormRow label="Location" error={errors?.name?.message}>
+          <Input
+            type="text"
+            id="location"
+            disabled={isCreating}
+            placeholder={
+              isFetchingLoading ? "Fetching location..." : "Enter your location"
+            }
+            {...register("location")}
+          />
+        </FormRow>
+
+        {/* Date Input */}
+        <FormRow label="Select a Date" error={errors?.date?.message}>
+          <InputWrapper>
+            <Controller
+              name="bookingDate"
+              control={control}
+              render={({ field }) => (
+                <DatePicker
+                  selected={field.value}
+                  onChange={(date) => field.onChange(date)}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Enter a date"
+                  // customInput={<Input />}
+                />
+              )}
+            />
+          </InputWrapper>
+        </FormRow>
+
+        <FormRow label="Select Time" error={errors?.time?.message}>
+          <InputWrapper>
+            <Controller
+              name="time"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="time"
+                  {...field}
+                  value={field.value || currentTime}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
+            />
+          </InputWrapper>
+        </FormRow>
 
         {/* Buttons */}
         <ButtonContainer>
           <Button variant="confirm" type="submit">
-            Place Order
+            Confirm Booking
           </Button>
           <Button
             variation="secondary"
@@ -187,7 +252,7 @@ function OrderForm({ service, onCloseModal }) {
             Cancel
           </Button>
         </ButtonContainer>
-      </form>
+      </Form>
     </ModalContent>
   );
 }
